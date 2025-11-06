@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1200" height="675" viewBox="0 0 1200 675" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="g1" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#1a1a1a"/>
+      <stop offset="100%" stop-color="#0a0a0a"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#8A2BE2"/>
+      <stop offset="100%" stop-color="#9d4ff3"/>
+    </linearGradient>
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="20" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  <rect width="1200" height="675" fill="url(#g1)"/>
+  <g opacity="0.3" filter="url(#glow)">
+    <circle cx="200" cy="120" r="140" fill="#8A2BE2"/>
+    <circle cx="980" cy="560" r="180" fill="#9d4ff3"/>
+    <circle cx="350" cy="500" r="90" fill="#8A2BE2"/>
+  </g>
+  <rect x="60" y="60" width="1080" height="555" rx="20" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.1)"/>
+  <g>
+    <path d="M240 500 L420 300 L560 440 L700 320 L960 520" stroke="url(#accent)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+    <circle cx="420" cy="300" r="8" fill="#8A2BE2"/>
+    <circle cx="560" cy="440" r="8" fill="#9d4ff3"/>
+    <circle cx="700" cy="320" r="8" fill="#8A2BE2"/>
+  </g>
+  <g font-family="Inter, Arial, sans-serif" text-anchor="middle">
+    <text x="600" y="310" font-size="42" fill="#ffffff" opacity="0.95">Thumbnail Unavailable</text>
+    <text x="600" y="355" font-size="20" fill="#b0b0b0">Using placeholder until a cover is found in assets/images</text>
+    <text x="600" y="400" font-size="18" fill="#9d4ff3">Tip: name files like “Project Title cover.png”</text>
+  </g>
+  <rect x="60" y="60" width="1080" height="555" rx="20" stroke="#8A2BE2" stroke-opacity="0.2"/>
+</svg>

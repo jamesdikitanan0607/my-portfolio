@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Portfolio</title>
+    <link rel="icon" type="image/gif" href="assets/images/portfolio icon.gif">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Preloader -->
+    <div id="preloader" aria-hidden="true">
+        <div class="preloader-ring"></div>
+    </div>
+
+    <!-- Scroll Progress Indicator -->
+    <div class="scroll-progress" id="scrollProgress"></div>
+    
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="container">
+            <div class="nav-brand">Portfolio</div>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="#hero" class="nav-link">Home</a></li>
+                <li><a href="#about" class="nav-link">About</a></li>
+                <li><a href="#skills" class="nav-link">Skills</a></li>
+                <li><a href="#projects" class="nav-link">Projects</a></li>
+                <li><a href="#teams" class="nav-link">Teams</a></li>
+            </ul>
+            <button class="theme-toggle" id="themeToggle">
+                <span class="sun-icon">☀️</span>
+                <span class="moon-icon">🌙</span>
+            </button>
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- HERO SECTION -->
+    <section id="hero" class="hero-section" data-parallax data-speed="0.3">
+        <div class="hero-background" data-parallax data-speed="0.1">
+            <div class="hero-gradient"></div>
+            <div class="hero-particles">
+                <div class="particle" data-speed="0.8"></div>
+                <div class="particle" data-speed="1.2"></div>
+                <div class="particle" data-speed="0.6"></div>
+                <div class="particle" data-speed="1.0"></div>
+                <div class="particle" data-speed="0.9"></div>
+            </div>
+        </div>
+        
+        <div class="hero-content">
+            <div class="hero-text" data-anim="fade-slide-up">
+                <h1 class="hero-title">James Dikitanan – Video Editor</h1>
+                    <p class="hero-subtitle">Video Editor & Creative Storyteller</p>
+                    <!-- Masked tagline for Soleil Noir inspired reveal -->
+                    <div class="hero-tagline-wrap" aria-hidden="true">
+                        <h2 class="hero-tagline">Creating engaging visuals and dynamic animations.</h2>
+                    </div>
+                <div class="hero-buttons">
+                    <a href="#projects" class="cta-button primary">View My Work</a>
+                    <a href="#about" class="cta-button secondary">About Me</a>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- ME SECTION removed -->
+    <!-- ABOUT SECTION -->
+    <section id="about" class="about-section" data-parallax data-speed="0.2">
+        <div class="about-background" data-parallax data-speed="0.08">
+            <div class="about-shapes">
+                <div class="shape shape-1" data-speed="0.4"></div>
+                <div class="shape shape-2" data-speed="0.6"></div>
+                <div class="shape shape-3" data-speed="0.3"></div>
+            </div>
+        </div>
+        
+        <div class="container">
+            <div class="about-content">
+                <div class="about-image-container" data-anim="fade-right">
+                    <img src="assets/images/pfp 2.png" alt="About James" class="about-image" data-parallax data-speed="0.25">
+                    <div class="about-image-frame"></div>
+                </div>
+                
+                <div class="about-text-container" data-anim="fade-left">
+                    <h2 class="section-title">About Me</h2>
+                    <p class="about-description">
+                        Welcome to my portfolio! I’m James Dikitanan, a dedicated video editor bringing stories to life through compelling cuts and visuals. Scroll down to see my work and creative journey.
+                    </p>
+                    <div class="about-stats">
+                        <div class="stat-item" data-counter="13">
+                            <h3 class="stat-number">0</h3>
+                            <p class="stat-label">Years Experience</p>
+                        </div>
+                        <div class="stat-item" data-counter="20+">
+                            <h3 class="stat-number">0</h3>
+                            <p class="stat-label">Projects Completed</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PROJECTS SECTION -->
+    <section id="projects" class="projects-section" data-parallax data-speed="0.12">
+        <div class="container">
+            <h2 class="section-title" data-anim="fade-up">Featured Projects</h2>
+            
+            <div class="projects-grid" id="projectsGrid">
+                <!-- Projects will be dynamically loaded here -->
+            </div>
+        </div>
+    </section>
+
+    <!-- TEAMS SECTION -->
+    <section id="teams" class="teams-section" data-parallax data-speed="0.08">
+        <div class="container">
+            <h2 class="section-title" data-anim="fade-up">Teams I've Worked With</h2>
+            
+            <div class="teams-grid" id="teamsGrid">
+                <!-- Teams will be dynamically loaded here using the unified project/team card system -->
+            </div>
+        </div>
+    </section>
+
+  <!-- SKILLS SECTION -->
+    <section id="skills" class="skills-section" data-parallax data-speed="0.15">
+        <div class="container">
+            <h2 class="section-title" data-anim="fade-up">Skills & Expertise</h2>
+            
+            <div class="skills-grid">
+                <div class="skill-card" data-anim="zoom-in" data-delay="0">
+                    <div class="skill-icon" data-parallax data-speed="0.3"><img src="assets/images/pr logo.png" alt="Premiere Pro" class="skill-icon-img"></div>
+                    <h3 class="skill-name">Adobe Premiere Pro</h3>
+                    
+                    <p class="skill-description">8 years of professional editing experience</p>
+                </div>
+                
+                <div class="skill-card" data-anim="zoom-in" data-delay="1">
+                    <div class="skill-icon" data-parallax data-speed="0.4"><img src="assets/images/ae logo.png" alt="After Effects" class="skill-icon-img"></div>
+                    <h3 class="skill-name">After Effects</h3>
+                    
+                    <p class="skill-description">4 months of dedicated learning and practice</p>
+                </div>
+
+                <div class="skill-card" data-anim="zoom-in" data-delay="1">
+                    <div class="skill-icon" data-parallax data-speed="0.4"><img src="assets/images/capcut logo.png" alt="After Effects" class="skill-icon-img"></div>
+                    <h3 class="skill-name">Capcut</h3>
+                    
+                    <p class="skill-description">Built and grew a TikTok to 350k followers using CapCut as the primary editing tool.</p>
+                </div>
+                
+                
+                <div class="skill-card" data-anim="zoom-in" data-delay="10">
+                    <div class="skill-icon" data-parallax data-speed="0.5">📖</div>
+                    <h3 class="skill-name">Storytelling</h3>
+                    
+                    <p class="skill-description">Strong narrative sequencing and pacing skills</p>
+                </div>
+                
+                <div class="skill-card" data-anim="zoom-in" data-delay="300">
+                    <div class="skill-icon" data-parallax data-speed="0.6">🎨</div>
+                    <h3 class="skill-name">UI/UX Design</h3>
+                    
+                    <p class="skill-description">Currently learning design principles and tools</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SOCIAL SECTION removed -->
+
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3 class="footer-title">James Dikitanan</h3>
+                    <p class="footer-description">Video Editor</p>
+                </div>
+                
+                <div class="footer-section">
+                    <h4 class="footer-heading">Quick Links</h4>
+                    <ul class="footer-links">
+                        <li><a href="#hero">Home</a></li>
+                        <li><a href="#about">About</a></li>
+                        <li><a href="#projects">Projects</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4 class="footer-heading">Connect</h4>
+                    <div class="footer-social">
+                        <a href="https://www.instagram.com/james_stephs" target="_blank" rel="noopener" aria-label="Instagram">
+                            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                                <rect x="2" y="2" width="20" height="20" rx="5" ry="5" stroke="currentColor" stroke-width="2" fill="none"/>
+                                <circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="2" fill="none"/>
+                                <circle cx="17.5" cy="6.5" r="1.5" fill="currentColor"/>
+                            </svg>
+                        </a>
+                        <a href="https://github.com/jamesdikitanan0607" target="_blank" rel="noopener" aria-label="GitHub">
+                            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                                <path fill="currentColor" d="M12 2C6.48 2 2 6.58 2 12.26c0 4.52 2.87 8.35 6.84 9.7.5.09.68-.22.68-.49 0-.24-.01-.87-.01-1.71-2.78.62-3.37-1.37-3.37-1.37-.45-1.18-1.1-1.49-1.1-1.49-.9-.63.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.89 1.57 2.34 1.12 2.91.86.09-.66.35-1.12.64-1.38-2.22-.26-4.56-1.14-4.56-5.08 0-1.12.39-2.03 1.03-2.75-.1-.26-.45-1.31.1-2.73 0 0 .85-.28 2.79 1.05.81-.23 1.68-.35 2.55-.35s1.74.12 2.55.35c1.94-1.33 2.79-1.05 2.79-1.05.55 1.42.2 2.47.1 2.73.64.72 1.03 1.63 1.03 2.75 0 3.95-2.34 4.81-4.57 5.07.36.32.68.95.68 1.92 0 1.39-.01 2.5-.01 2.84 0 .27.18.59.69.49A10.04 10.04 0 0 0 22 12.26C22 6.58 17.52 2 12 2Z"/>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; James Dikitanan. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Video Modal -->
+    <div class="video-modal" id="videoModal">
+        <div class="modal-overlay" id="modalOverlay"></div>
+        <div class="modal-content">
+            <button class="modal-close" id="modalClose">×</button>
+            <div class="modal-body">
+                <h3 class="modal-title" id="modalTitle"></h3>
+                <div class="modal-video-container">
+                    <video id="modalVideo" controls></video>
+                </div>
+                <p class="modal-description" id="modalDescription"></p>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

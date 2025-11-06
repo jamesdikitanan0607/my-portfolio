@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: #000;
+            color: #fff;
+        }
+        .test-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .test-section {
+            margin-bottom: 30px;
+            padding: 20px;
+            border: 1px solid #333;
+            border-radius: 8px;
+        }
+        .success {
+            color: #4CAF50;
+        }
+        .error {
+            color: #f44336;
+        }
+        .info {
+            color: #2196F3;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1>Portfolio</h1>
+        
+        <div class="test-section">
+            <h2>Files Status</h2>
+            <p id="files-status">Checking files...</p>
+        </div>
+        
+        <div class="test-section">
+            <h2>JavaScript Test</h2>
+            <p id="js-test">Testing JavaScript...</p>
+        </div>
+        
+        <div class="test-section">
+            <h2>CSS Test</h2>
+            <p id="css-test">Testing CSS...</p>
+        </div>
+        
+        <div class="test-section">
+            <h2>Projects Test</h2>
+            <p id="projects-test">Testing Projects...</p>
+            <div id="test-projects-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-top: 15px;"></div>
+        </div>
+        
+        <div class="test-section">
+            <h2>Open Portfolio</h2>
+            <p><a href="index.html" target="_blank">Open Portfolio Website</a></p>
+        </div>
+    </div>
+
+    <script>
+        // Test if files exist
+        function testFiles() {
+            const files = ['index.html', 'styles.css', 'script.js'];
+            const results = [];
+            
+            files.forEach(file => {
+                try {
+                    const xhr = new XMLHttpRequest();
+                    xhr.open('HEAD', file, false);
+                    xhr.send();
+                    if (xhr.status === 200) {
+                        results.push(`<span class="success">✓ ${file} exists</span>`);
+                    } else {
+                        results.push(`<span class="error">✗ ${file} missing</span>`);
+                    }
+                } catch (e) {
+                    results.push(`<span class="error">✗ ${file} error: ${e.message}</span>`);
+                }
+            });
+            
+            document.getElementById('files-status').innerHTML = results.join('<br>');
+        }
+        
+        // Test JavaScript
+        function testJavaScript() {
+            try {
+                // Test if main script loads
+                const script = document.createElement('script');
+                script.src = 'script.js';
+                script.onload = function() {
+                    document.getElementById('js-test').innerHTML = '<span class="success">✓ JavaScript loaded successfully</span>';
+                };
+                script.onerror = function() {
+                    document.getElementById('js-test').innerHTML = '<span class="error">✗ JavaScript failed to load</span>';
+                };
+                document.head.appendChild(script);
+            } catch (e) {
+                document.getElementById('js-test').innerHTML = `<span class="error">✗ JavaScript error: ${e.message}</span>`;
+            }
+        }
+        
+        // Test CSS
+        function testCSS() {
+            try {
+                const link = document.createElement('link');
+                link.rel = 'stylesheet';
+                link.href = 'styles.css';
+                link.onload = function() {
+                    document.getElementById('css-test').innerHTML = '<span class="success">✓ CSS loaded successfully</span>';
+                };
+                link.onerror = function() {
+                    document.getElementById('css-test').innerHTML = '<span class="error">✗ CSS failed to load</span>';
+                };
+                document.head.appendChild(link);
+            } catch (e) {
+                document.getElementById('css-test').innerHTML = `<span class="error">✗ CSS error: ${e.message}</span>`;
+            }
+        }
+        
+        // Test Projects
+        function testProjects() {
+            try {
+                const testProjects = [
+                    {
+                        title: 'Museo Final',
+                        date: 'Jun 2024',
+                        image: 'assets/images/Museo Final.mp4',
+                        thumbnail: 'assets/images/museo cover.png',
+                        description: 'A cinematic video project showcasing advanced editing techniques and storytelling.'
+                    },
+                    {
+                        title: 'ATXI Team Intro',
+                        date: 'Mar 2025',
+                        image: 'assets/images/videos/hackathon v2.mp4',
+                        thumbnail: 'assets/images/logo atxi.jpg',
+                        description: 'Hackathon video showcasing team collaboration and innovation.'
+                    },
+                    {
+                        title: 'Generated Image Project',
+                        date: 'Sep 2025',
+                        image: 'assets/images/Generated Image September 26, 2025 - 12_46AM.png',
+                        thumbnail: 'assets/images/Generated Image September 26, 2025 - 12_46AM.png',
+                        description: 'Creative project featuring AI-generated imagery and digital art.'
+                    }
+                ];
+                
+                const testGrid = document.getElementById('test-projects-grid');
+                testGrid.innerHTML = '';
+                
+                testProjects.forEach((project, index) => {
+                    const projectCard = document.createElement('div');
+                    projectCard.style.cssText = 'border: 1px solid #333; border-radius: 8px; padding: 10px; background: rgba(255,255,255,0.1);';
+                    projectCard.innerHTML = `
+                        <div style="font-weight: bold; color: var(--violet, #8A2BE2);">${project.title}</div>
+                        <div style="font-size: 12px; color: #888;">${project.date}</div>
+                        <div style="font-size: 11px; margin-top: 5px;">${project.description}</div>
+                    `;
+                    testGrid.appendChild(projectCard);
+                });
+                
+                document.getElementById('projects-test').innerHTML = `<span class="success">✓ Projects test successful (${testProjects.length} projects)</span>`;
+            } catch (e) {
+                document.getElementById('projects-test').innerHTML = `<span class="error">✗ Projects test error: ${e.message}</span>`;
+            }
+        }
+        
+        // Run tests when page loads
+        window.addEventListener('load', function() {
+            testFiles();
+            testJavaScript();
+            testCSS();
+            testProjects();
+        });
+    </script>
+</body>
+</html>
