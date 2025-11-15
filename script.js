@@ -38,7 +38,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initHeroReveal();
     initCustomCursor();
     initAmbientDust();
-
+    initAboutImageHover();
     console.log('✅ Portfolio Website Initialized Successfully');
 });
 
@@ -122,6 +122,50 @@ function initAmbientDust() {
         draw();
     }
 }
+function initAboutImageHover() {
+    const img = document.querySelector('.about-image');
+    if (!img) return;
+    const originalSrc = img.getAttribute('src');
+    const hoverSrc = 'assets/images/pic2.png';
+    const preloaded = new Image();
+    preloaded.src = hoverSrc;
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    const fadeSwap = (newSrc) => {
+        if (prefersReduced) { img.src = newSrc; return; }
+        const prevTransition = img.style.transition;
+        img.style.transition = 'opacity 120ms ease';
+
+        const handleFadeOutEnd = (e) => {
+            if (e.propertyName !== 'opacity') return;
+            img.removeEventListener('transitionend', handleFadeOutEnd);
+            img.src = newSrc;
+            requestAnimationFrame(() => {
+                const handleFadeInEnd = (e2) => {
+                    if (e2.propertyName !== 'opacity') return;
+                    img.removeEventListener('transitionend', handleFadeInEnd);
+                    // Restore any prior transition (let CSS cascade apply if empty)
+                    img.style.transition = prevTransition;
+                };
+                img.addEventListener('transitionend', handleFadeInEnd, { once: true });
+                img.style.opacity = '1';
+            });
+        };
+        img.addEventListener('transitionend', handleFadeOutEnd);
+        img.style.opacity = '0';
+    };
+
+    img.addEventListener('mouseenter', () => {
+        if (preloaded.complete) {
+            fadeSwap(hoverSrc);
+        } else {
+            preloaded.addEventListener('load', () => fadeSwap(hoverSrc), { once: true });
+        }
+    });
+    img.addEventListener('mouseleave', () => {
+        fadeSwap(originalSrc);
+    });
+}
 
 /* Custom cursor */
 function initCustomCursor() {
@@ -168,26 +212,10 @@ function initCustomCursor() {
 
 // Theme Management
 function initTheme() {
-    const themeToggle = document.querySelector('.theme-toggle');
     const body = document.body;
-    
-    // Load saved theme
-    const savedTheme = localStorage.getItem('theme') || 'dark';
-    body.setAttribute('data-theme', savedTheme);
-    
-    themeToggle.addEventListener('click', () => {
-        const currentTheme = body.getAttribute('data-theme');
-        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-        
-        body.setAttribute('data-theme', newTheme);
-        localStorage.setItem('theme', newTheme);
-        
-        // Add theme transition effect
-        body.style.transition = 'all 0.3s ease';
-        setTimeout(() => {
-            body.style.transition = '';
-        }, 300);
-    });
+    // Always use dark theme and clear any saved preference
+    body.setAttribute('data-theme', 'dark');
+    try { localStorage.removeItem('theme'); } catch (e) {}
 }
 
 // Navigation with Hide/Show on Scroll
