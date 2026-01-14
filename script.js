@@ -17,7 +17,7 @@ function requestTick() {
 // Initialize when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
     console.log('🚀 Initializing Portfolio Website...');
-    
+
     // Initialize all components
     applyHeroOnlyFirstLoad();
     initTheme();
@@ -32,7 +32,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initMobileMenu();
     initHeroAnimations();
     // initSocialAnimations removed (Let's Connect section deleted)
-    
+
     // Micro-interaction initializers
     initPreloader();
     initHeroReveal();
@@ -126,7 +126,7 @@ function initAboutImageHover() {
     const img = document.querySelector('.about-image');
     if (!img) return;
     const originalSrc = img.getAttribute('src');
-    const hoverSrc = 'assets/images/pic2.png';
+    const hoverSrc = 'assets/images/pic2.jpg';
     const preloaded = new Image();
     preloaded.src = hoverSrc;
     const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -215,18 +215,18 @@ function initTheme() {
     const body = document.body;
     // Always use dark theme and clear any saved preference
     body.setAttribute('data-theme', 'dark');
-    try { localStorage.removeItem('theme'); } catch (e) {}
+    try { localStorage.removeItem('theme'); } catch (e) { }
 }
 
 // Navigation with Hide/Show on Scroll
 function initNavigation() {
     const navbar = document.querySelector('.navbar');
     const navLinks = document.querySelectorAll('.nav-link');
-    
+
     // Hide/show navbar on scroll
     window.addEventListener('scroll', () => {
         const currentScrollY = window.scrollY;
-        
+
         if (currentScrollY > lastScrollY && currentScrollY > 100) {
             // Scrolling down
             navbar.classList.add('hidden');
@@ -234,17 +234,17 @@ function initNavigation() {
             // Scrolling up
             navbar.classList.remove('hidden');
         }
-        
+
         lastScrollY = currentScrollY;
     });
-    
+
     // Smooth scrolling for navigation links
     navLinks.forEach(link => {
         link.addEventListener('click', (e) => {
             e.preventDefault();
             const targetId = link.getAttribute('href');
             const targetSection = document.querySelector(targetId);
-            
+
             if (targetSection) {
                 const offsetTop = targetSection.offsetTop - 80; // Account for fixed navbar
                 window.scrollTo({
@@ -260,13 +260,13 @@ function initNavigation() {
 function initMobileMenu() {
     const hamburger = document.querySelector('.hamburger');
     const navMenu = document.querySelector('.nav-menu');
-    
+
     if (hamburger && navMenu) {
         hamburger.addEventListener('click', () => {
             hamburger.classList.toggle('active');
             navMenu.classList.toggle('active');
         });
-        
+
         // Close menu when clicking on a link
         const navLinks = document.querySelectorAll('.nav-link');
         navLinks.forEach(link => {
@@ -281,12 +281,12 @@ function initMobileMenu() {
 // Parallax Scrolling Effects
 function initParallax() {
     const parallaxElements = document.querySelectorAll('[data-parallax]');
-    
+
     if (parallaxElements.length === 0) return;
-    
+
     window.addEventListener('scroll', requestTick);
     window.addEventListener('resize', requestTick);
-    
+
     // Initial update
     updateParallax();
 }
@@ -294,7 +294,7 @@ function initParallax() {
 function updateParallax() {
     const scrolled = window.pageYOffset;
     const windowHeight = window.innerHeight;
-    
+
     // Update parallax elements
     document.querySelectorAll('[data-parallax]').forEach(element => {
         // prefer explicit data-speed, fallback to data-parallax value
@@ -303,11 +303,11 @@ function updateParallax() {
         const rect = element.getBoundingClientRect();
         const elementTop = rect.top + scrolled;
         const elementHeight = rect.height;
-        
+
         // Only animate if element is in viewport
         if (scrolled + windowHeight > elementTop && scrolled < elementTop + elementHeight) {
             const yPos = -(scrolled - elementTop) * speed;
-            
+
             if (element.classList.contains('hero-image')) {
                 // Special handling for hero image
                 element.style.transform = `translateY(${yPos * 0.3}px) scale(1.05)`;
@@ -320,14 +320,14 @@ function updateParallax() {
             }
         }
     });
-    
+
     // Update floating particles
     document.querySelectorAll('.particle').forEach((particle, index) => {
         const speed = 0.1 + (index * 0.02);
         const yPos = -(scrolled * speed);
         particle.style.transform = `translateY(${yPos}px) rotate(${yPos * 0.5}deg)`;
     });
-    
+
     // Update background shapes
     document.querySelectorAll('.shape').forEach((shape, index) => {
         const speed = 0.05 + (index * 0.01);
@@ -335,21 +335,21 @@ function updateParallax() {
         const xPos = Math.sin(scrolled * 0.001 + index) * 20;
         shape.style.transform = `translate(${xPos}px, ${yPos}px) rotate(${yPos * 0.1}deg)`;
     });
-    
+
     ticking = false;
 }
 
 // Scroll Progress Indicator
 function initScrollProgress() {
     const scrollProgress = document.querySelector('.scroll-progress');
-    
+
     if (!scrollProgress) return;
-    
+
     window.addEventListener('scroll', () => {
         const scrollTop = window.pageYOffset;
         const docHeight = document.documentElement.scrollHeight - window.innerHeight;
         const scrollPercent = (scrollTop / docHeight) * 100;
-        
+
         scrollProgress.style.width = scrollPercent + '%';
     });
 }
@@ -357,32 +357,32 @@ function initScrollProgress() {
 // Scroll-triggered Animations
 function initScrollAnimations() {
     const animatedElements = document.querySelectorAll('[data-anim]');
-    
+
     if (animatedElements.length === 0) return;
-    
+
     const observerOptions = {
         threshold: 0.1,
         rootMargin: '0px 0px -50px 0px'
     };
-    
+
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 const element = entry.target;
                 const animation = element.getAttribute('data-anim');
                 const delay = element.getAttribute('data-delay') || 0;
-                
+
                 // Add animation class with delay
                 setTimeout(() => {
                     element.classList.add('animate');
                 }, parseInt(delay));
-                
+
                 // Stop observing after animation
                 observer.unobserve(element);
             }
         });
     }, observerOptions);
-    
+
     animatedElements.forEach(element => {
         observer.observe(element);
     });
@@ -394,7 +394,7 @@ function initHeroAnimations() {
     const heroSubtitle = document.querySelector('.hero-subtitle');
     const heroButtons = document.querySelector('.hero-buttons');
     const heroImage = document.querySelector('.hero-image');
-    
+
     // Animate hero elements on load
     setTimeout(() => {
         if (heroTitle) heroTitle.style.opacity = '1';
@@ -402,7 +402,7 @@ function initHeroAnimations() {
         if (heroButtons) heroButtons.style.opacity = '1';
         if (heroImage) heroImage.style.opacity = '1';
     }, 100);
-    
+
     // Scroll indicator click
     const scrollIndicator = document.querySelector('.hero-scroll-indicator');
     if (scrollIndicator) {
@@ -413,13 +413,13 @@ function initHeroAnimations() {
             }
         });
     }
-    
+
     // Typing effect for hero title
     if (heroTitle) {
         const text = heroTitle.textContent;
         heroTitle.textContent = '';
         heroTitle.style.opacity = '1';
-        
+
         let charIndex = 0;
         const typeWriter = () => {
             if (charIndex < text.length) {
@@ -428,48 +428,80 @@ function initHeroAnimations() {
                 setTimeout(typeWriter, 50);
             }
         };
-        
+
         setTimeout(typeWriter, 500);
     }
 }
 
 // Projects Section with Video Modal
-// Required feature projects
+// Projects based on resume and GitHub repositories
 const projects = [
-    { 
-        title: 'ATXI Team Introduction', 
-        date: 'Sep 2025', 
-        description: 'Team intro sizzle with dynamic pacing and captions.',
-        thumbnail: 'assets/images/logo atxi.jpg',
-        url: 'https://drive.google.com/file/d/1D6nr4XwvCyoXvPNKECxD0f3QiNWq2WmR/view?usp=sharing'
-    },
-    { 
-        title: 'Ascentra App Showcase', 
-        date: 'Mar 2025', 
-        description: 'Product showcase highlighting features and UX.',
-        thumbnail: 'assets/images/ascentra.png',
-        url: 'https://drive.google.com/file/d/168YgF23XKmLHShx7d9Y0smdE2fvX_hfs/view?usp=sharing'
-    },
-    { 
-        title: 'Museo', 
-        date: 'Jun 2025', 
-        description: 'Cinematic piece focusing on composition and tone.',
-        thumbnail: 'assets/images/museo cover.png',
-        url: 'https://drive.google.com/file/d/1g27qO8OKOvqH1gunGrD7EjhY6fBBEimU/view?usp=sharing'
-    },
-    { 
-        title: 'Panagtagbo Recap Showcase', 
-        date: 'Aug 2025', 
-        description: 'Event recap with energetic cutting and rhythm.',
-        thumbnail: 'assets/images/poster (1).png',
-        url: 'https://drive.google.com/file/d/1ikO2u03XuWD5OXo8RsU-kh4wInl3JpS9/view?usp=sharing'
+    {
+        title: 'Beanly',
+        status: 'Completed',
+        platform: 'Software',
+        details: [
+            'Developed a fully functional Point of Sale system for a coffee shop.',
+            'Implemented inventory management, sales tracking, and transaction processing.',
+            'Applied OOP principles and collaborated using Git.'
+        ],
+        tech: ['Java', 'Git'],
+        url: 'https://github.com/jamesdikitanan0607/Beanly'
     },
     {
-        title: 'Develop Kreativity Intro',
-        date: '2025',
-        description: 'Intro piece edited for Develop Kreativity.',
-        thumbnail: 'assets/images/logo develop kreativity.jpg',
-        url: 'https://drive.google.com/file/d/1QOOna3RNJJds2hHrxZnu2-dc7Mhi4MgN/view?usp=sharing'
+        title: 'Sugbo-Aid',
+        status: 'Completed',
+        platform: 'Software',
+        details: [
+            'Built a donation management system to track contributors and generate reports.',
+            'Designed intuitive user interfaces and implemented data validation.'
+        ],
+        tech: ['Java'],
+        url: 'https://github.com/jamesdikitanan0607/sugbo-aid'
+    },
+    {
+        title: 'Ascentra Dashboard',
+        status: 'Completed',
+        platform: 'Full Stack',
+        details: [
+            'Created a dashboard to manage user data, analytics, and administrative tasks.',
+            'Improved front-end logic using TypeScript and designed UI/UX layouts.'
+        ],
+        tech: ['Java', 'TypeScript'],
+        url: 'https://github.com/jamesdikitanan0607/Ascentra-'
+    },
+    {
+        title: 'Admin Ascentra',
+        status: 'Completed',
+        platform: 'Full Stack',
+        details: [
+            'Developed the administrative side for user management and system monitoring.',
+            'Implemented secure access and dynamic analytical views.'
+        ],
+        tech: ['TypeScript', 'JavaScript'],
+        url: 'https://github.com/jamesdikitanan0607/admin-ascentra'
+    },
+    {
+        title: 'Invex',
+        status: 'Completed',
+        platform: 'Website',
+        details: [
+            'Developed an interactive dashboard with dynamic data visualization.',
+            'Integrated APIs and implemented responsive design.'
+        ],
+        tech: ['TypeScript', 'JavaScript', 'REST API'],
+        url: 'https://github.com/jamesdikitanan0607/Invex'
+    },
+    {
+        title: 'Shipping Company (South Shore)',
+        status: 'Completed',
+        platform: 'Website',
+        details: [
+            'Contributed to designing the website’s user interface and user experience.',
+            'Applied responsive design principles and ensured accessibility across devices.'
+        ],
+        tech: ['TypeScript', 'HTML', 'CSS'],
+        url: 'https://github.com/jamesdikitanan0607/southshore-b2b-mockup'
     }
 ];
 
@@ -532,8 +564,8 @@ async function resolveThumbnail(title) {
             if (res.ok) return url;
         }
     }
-    // Fallback placeholder
-    return 'assets/images/placeholder.svg';
+    // Fallback placeholder (using a generic coding-themed gradient)
+    return 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSJ1cmwoI2cpIi8+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJnIiB4MT0iMCIgeTE9IjAiIHgyPSIxIiB5Mj0iMSI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzZkMDBmZiIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzBhMGUwZiIvPjwvbGluZWFyR3JhZGllbnQ+PC9kZWZzPjwvc3ZnPg==';
 }
 
 async function resolveMedia(title) {
@@ -550,104 +582,78 @@ async function resolveMedia(title) {
     return { url: img, isVideo: false };
 }
 
-function initProjects() {
+async function initProjects() {
     const projectsGrid = document.querySelector('#projectsGrid') || document.querySelector('.projects-grid');
     if (!projectsGrid) {
         console.warn('Projects grid not found');
         return;
     }
-    console.log('📁 Initializing projects...');
 
-    projects.forEach(async (project, index) => {
-        // Build a unified card
-        const card = createUnifiedCard(project, index, {
-            type: 'project',
-            onClick: () => {
-                if (project.url) {
-                    window.open(project.url, '_blank', 'noopener');
-                }
-            }
-        });
+    projectsGrid.innerHTML = '';
 
+    projects.forEach((project, index) => {
+        const card = createUnifiedCard(project, index, { type: 'project' });
         projectsGrid.appendChild(card);
-
-        // If project explicitly provides a thumbnail, use it; otherwise resolve
-        const thumbEl = card.querySelector('.project-thumbnail');
-        if (thumbEl) {
-            const thumbUrl = project.thumbnail || await resolveThumbnail(project.title);
-            thumbEl.style.backgroundImage = `url('${thumbUrl}')`;
-        }
-
-        card.dataset.url = project.url || '';
     });
 
-    if (projects.length === 5) {
-        projectsGrid.classList.add('grid-five');
-    }
-
-    // Initialize modal wiring
-    initVideoModal();
+    // Re-initialize scroll animations for new elements
+    initScrollAnimations();
 }
 
 // Unified card builder used for both projects and teams to ensure consistent layout/styling
 function createUnifiedCard(item, index, options = {}) {
     const { type = 'project', onClick } = options;
     const card = document.createElement('div');
-    // Use skill-card styling for teams to match Skills & Expertise layout, otherwise use project-card
     card.className = type === 'team' ? 'skill-card team-card' : 'project-card';
-    // Common animation attributes
     card.setAttribute('data-anim', 'zoom-in');
     card.setAttribute('data-delay', (index * 100).toString());
 
     if (type === 'team') {
-        // Skill-style card: thumbnail in .skill-icon, title, and description
         card.innerHTML = `
             <div class="skill-icon" data-parallax data-speed="0.22">
                 <img class="skill-icon-img team-logo-image" src="${item.thumbnail || ''}" alt="${item.title} logo" />
             </div>
             <div class="skill-name">${item.title}</div>
+            <div class="skill-role">${item.role || ''}</div>
             <div class="skill-description">${item.description || ''}</div>
         `;
     } else {
-        // Project card (unchanged)
-        card.innerHTML = `
-            <div class="project-thumbnail" data-parallax data-speed="0.2">
-                <div class="project-play-icon">▶</div>
+        // New project card structure
+        const detailsHtml = item.details ? `
+            <div class="project-details">
+                <ul>
+                    ${item.details.map(detail => `<li>${detail}</li>`).join('')}
+                </ul>
             </div>
+        ` : '';
+
+        const techHtml = item.tech ? `
+            <div class="project-tech">
+                ${item.tech.map(t => `<span class="tech-tag">${t}</span>`).join('')}
+            </div>
+        ` : '';
+
+        card.innerHTML = `
             <div class="project-content">
-                <h3 class="project-title">${item.title}</h3>
-                <p class="project-description">${item.description || ''}</p>
+                <div class="project-header">
+                    <h3 class="project-title">${item.title}</h3>
+                    <div class="project-badges">
+                        <span class="badge badge-status">${item.status}</span>
+                        <span class="badge badge-platform">${item.platform}</span>
+                    </div>
+                </div>
+                ${detailsHtml}
+                ${techHtml}
             </div>
         `;
     }
 
-    // Click handling: projects open modal, teams open external link (or custom handler)
-    card.addEventListener('click', (e) => {
-        // Attempt custom onClick first
-        if (typeof onClick === 'function') return onClick(e);
-
-        if (type === 'project') {
-            const mediaUrl = card.dataset.mediaUrl;
-            const isVideo = card.dataset.isVideo === '1';
-            openVideoModal({
-                title: item.title,
-                date: item.date,
-                description: item.description,
-                mediaUrl,
-                isVideo
-            });
-        } else if (type === 'team' && item.url) {
+    if ((type === 'team' || type === 'project') && item.url) {
+        card.addEventListener('click', () => {
             window.open(item.url, '_blank', 'noopener');
-        }
-    });
-
-    // Hover effects (same as before)
-    card.addEventListener('mouseenter', () => {
-        card.style.transform = 'translateY(-12px) scale(1.02)';
-    });
-    card.addEventListener('mouseleave', () => {
-        card.style.transform = 'translateY(0) scale(1)';
-    });
+        });
+        card.style.cursor = 'pointer';
+    }
 
     return card;
 }
@@ -656,7 +662,8 @@ function createUnifiedCard(item, index, options = {}) {
 const teams = [
     {
         title: 'Develop Kreativity',
-        description: 'Assigned as Video Editor and Motion Graphics Designer for various projects.',
+        role: 'Dev Team & Video Editor',
+        description: 'Designed UI/UX layouts, workflows, and produced marketing/presentation videos and motion graphics.',
         thumbnail: 'assets/images/logo develop kreativity.jpg',
         url: 'https://www.developkreativity.com'
     }
@@ -751,11 +758,11 @@ function openVideoModal({ title, date, description, mediaUrl, isVideo }) {
 
 function closeVideoModal() {
     const modal = document.querySelector('.video-modal');
-    
+
     if (modal) {
         modal.classList.remove('active');
         document.body.style.overflow = 'auto';
-        
+
         // Stop any playing videos
         const videos = modal.querySelectorAll('video');
         videos.forEach(video => {
@@ -768,9 +775,9 @@ function closeVideoModal() {
 // Skills Section with Animated Progress Bars
 function initSkills() {
     const skillCards = document.querySelectorAll('.skill-card');
-    
+
     if (skillCards.length === 0) return;
-    
+
     const skillObserver = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
@@ -780,7 +787,7 @@ function initSkills() {
             }
         });
     }, { threshold: 0.5 });
-    
+
     skillCards.forEach(card => {
         skillObserver.observe(card);
     });
@@ -789,25 +796,25 @@ function initSkills() {
 function animateSkillCard(skillCard) {
     const progressBar = skillCard.querySelector('.progress-bar');
     const progressText = skillCard.querySelector('.progress-text');
-    
+
     if (progressBar) {
         // Get progress percentage from data attribute or default
         const progress = progressBar.getAttribute('data-progress') || '85';
-        
+
         // Set CSS variable for animation
         progressBar.style.setProperty('--progress', progress + '%');
-        
+
         // Animate progress bar
         setTimeout(() => {
             progressBar.classList.add('animate');
         }, 200);
-        
+
         // Animate progress text
         if (progressText) {
             animateNumber(progressText, 0, parseInt(progress), 1500);
         }
     }
-    
+
     // Animate skill icon
     const skillIcon = skillCard.querySelector('.skill-icon');
     if (skillIcon) {
@@ -860,22 +867,22 @@ function initCounters() {
 function animateNumber(element, start, end, duration) {
     const startTime = performance.now();
     const isPercentage = element.textContent.includes('%');
-    
+
     function updateNumber(currentTime) {
         const elapsed = currentTime - startTime;
         const progress = Math.min(elapsed / duration, 1);
-        
+
         // Easing function for smooth animation
         const easeOutQuart = 1 - Math.pow(1 - progress, 4);
         const currentValue = Math.floor(start + (end - start) * easeOutQuart);
-        
+
         element.textContent = currentValue + (isPercentage ? '%' : '');
-        
+
         if (progress < 1) {
             requestAnimationFrame(updateNumber);
         }
     }
-    
+
     requestAnimationFrame(updateNumber);
 }
 
@@ -885,7 +892,7 @@ function animateNumber(element, start, end, duration) {
 // Performance optimization: Throttle scroll events
 function throttle(func, limit) {
     let inThrottle;
-    return function() {
+    return function () {
         const args = arguments;
         const context = this;
         if (!inThrottle) {
@@ -913,17 +920,17 @@ function debounce(func, wait) {
 const optimizedScrollHandler = throttle(() => {
     // Update scroll-based animations
     updateParallax();
-    
+
     // Update navigation visibility
     const navbar = document.querySelector('.navbar');
     const currentScrollY = window.scrollY;
-    
+
     if (currentScrollY > lastScrollY && currentScrollY > 100) {
         navbar?.classList.add('hidden');
     } else {
         navbar?.classList.remove('hidden');
     }
-    
+
     lastScrollY = currentScrollY;
 }, 16); // ~60fps
 
@@ -931,7 +938,7 @@ const optimizedScrollHandler = throttle(() => {
 const optimizedResizeHandler = debounce(() => {
     // Update parallax on resize
     updateParallax();
-    
+
     // Re-check responsive behaviors
     checkResponsiveBehaviors();
 }, 250);
@@ -945,7 +952,7 @@ function checkResponsiveBehaviors() {
     const width = window.innerWidth;
     const navMenu = document.querySelector('.nav-menu');
     const hamburger = document.querySelector('.hamburger');
-    
+
     if (width > 768 && navMenu && hamburger) {
         // Reset mobile menu on desktop
         navMenu.classList.remove('active');
@@ -957,7 +964,7 @@ function checkResponsiveBehaviors() {
 function handleMissingAssets() {
     const images = document.querySelectorAll('img');
     const videos = document.querySelectorAll('video');
-    
+
     images.forEach(img => {
         img.addEventListener('error', () => {
             console.warn(`Failed to load image: ${img.src}`);
@@ -965,7 +972,7 @@ function handleMissingAssets() {
             img.alt = 'Image not found';
         });
     });
-    
+
     videos.forEach(video => {
         video.addEventListener('error', () => {
             console.warn(`Failed to load video: ${video.src}`);
@@ -1005,18 +1012,18 @@ let lastTime = performance.now();
 function monitorPerformance() {
     frameCount++;
     const currentTime = performance.now();
-    
+
     if (currentTime - lastTime >= 1000) {
         const fps = Math.round((frameCount * 1000) / (currentTime - lastTime));
-        
+
         if (fps < 30) {
             console.warn(`Low FPS detected: ${fps}`);
         }
-        
+
         frameCount = 0;
         lastTime = currentTime;
     }
-    
+
     requestAnimationFrame(monitorPerformance);
 }
 
@@ -1028,7 +1035,7 @@ window.addEventListener('beforeunload', () => {
     // Remove event listeners
     window.removeEventListener('scroll', optimizedScrollHandler);
     window.removeEventListener('resize', optimizedResizeHandler);
-    
+
     // Close any open modals
     closeVideoModal();
 });
