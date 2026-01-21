@@ -892,6 +892,7 @@ function initVideoCarousel() {
 function createVideoCard(video, index) {
     const card = document.createElement('div');
     card.className = 'video-card';
+    card.id = `video-card-${video.id || index}`;
     card.setAttribute('data-anim', 'fade-up');
     card.setAttribute('data-delay', (index * 100).toString());
 
@@ -911,6 +912,7 @@ function createVideoCard(video, index) {
     `;
 
     card.addEventListener('click', () => {
+        console.log(`🎥 Opening unique video: ${video.title} -> ${video.url}`);
         window.open(video.url, '_blank', 'noopener');
     });
 
