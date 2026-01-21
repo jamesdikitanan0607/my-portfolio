@@ -27,6 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initProjects();
     initTeams();
     initSkills();
+    initVideoCarousel();
     initCounters();
     initScrollProgress();
     initMobileMenu();
@@ -505,6 +506,35 @@ const projects = [
     }
 ];
 
+// Video Projects Data
+const videoProjects = [
+    {
+        title: 'ATXI Vid Demo',
+        id: '1UVk1tENe57P7gmSIl2zm4u998eda1lKy',
+        url: 'https://drive.google.com/file/d/1UVk1tENe57P7gmSIl2zm4u998eda1lKy/view'
+    },
+    {
+        title: 'Company Introduction',
+        id: '1eBgsFJIT4nYaDmjYMt9a7XGsZIwO7yx1',
+        url: 'https://drive.google.com/file/d/1eBgsFJIT4nYaDmjYMt9a7XGsZIwO7yx1/view'
+    },
+    {
+        title: 'Tiktok Content 1',
+        id: '1-lazb-JF-TnOaYw9c1yfshAP9pJt8wVD',
+        url: 'https://drive.google.com/file/d/1-lazb-JF-TnOaYw9c1yfshAP9pJt8wVD/view'
+    },
+    {
+        title: 'Tiktok Content 2',
+        id: '1-lazb-JF-TnOaYw9c1yfshAP9pJt8wVD',
+        url: 'https://drive.google.com/file/d/1-lazb-JF-TnOaYw9c1yfshAP9pJt8wVD/view'
+    },
+    {
+        title: 'Tiktok Content 3',
+        id: '15Q7bzKFhEzIJPsffN0zFt5_vdbSQG1aW',
+        url: 'https://drive.google.com/file/d/15Q7bzKFhEzIJPsffN0zFt5_vdbSQG1aW/view'
+    }
+];
+
 // Helpers to resolve asset filenames dynamically from assets/images
 const IMG_EXTS = ['png', 'jpg', 'jpeg', 'webp'];
 const VID_EXTS = ['mp4', 'webm', 'mov'];
@@ -798,28 +828,93 @@ function animateSkillCard(skillCard) {
     const progressText = skillCard.querySelector('.progress-text');
 
     if (progressBar) {
-        // Get progress percentage from data attribute or default
-        const progress = progressBar.getAttribute('data-progress') || '85';
+        const progress = progressBar.getAttribute('data-progress');
+        progressBar.style.setProperty('--progress', `${progress}%`);
+        progressBar.classList.add('animate');
+    }
+}
 
-        // Set CSS variable for animation
-        progressBar.style.setProperty('--progress', progress + '%');
+// Video Carousel Initialization
+function initVideoCarousel() {
+    const track = document.getElementById('videoCarouselTrack');
+    const prevBtn = document.getElementById('videoPrev');
+    const nextBtn = document.getElementById('videoNext');
 
-        // Animate progress bar
-        setTimeout(() => {
-            progressBar.classList.add('animate');
-        }, 200);
+    if (!track) return;
 
-        // Animate progress text
-        if (progressText) {
-            animateNumber(progressText, 0, parseInt(progress), 1500);
+    // Load video cards
+    videoProjects.forEach((video, index) => {
+        const card = createVideoCard(video, index);
+        track.appendChild(card);
+    });
+
+    // Scroll amount (card width + gap)
+    const getScrollAmount = () => {
+        const firstCard = track.querySelector('.video-card');
+        if (!firstCard) return 300;
+        const style = window.getComputedStyle(track);
+        const gap = parseInt(style.gap) || 0;
+        return firstCard.offsetWidth + gap;
+    };
+
+    if (prevBtn) {
+        prevBtn.addEventListener('click', () => {
+            track.scrollBy({
+                left: -getScrollAmount(),
+                behavior: 'smooth'
+            });
+        });
+    }
+
+    if (nextBtn) {
+        nextBtn.addEventListener('click', () => {
+            track.scrollBy({
+                left: getScrollAmount(),
+                behavior: 'smooth'
+            });
+        });
+    }
+
+    // Optional: Hide/Show arrows based on scroll position
+    const updateArrows = () => {
+        if (prevBtn) prevBtn.style.opacity = track.scrollLeft <= 0 ? '0.3' : '1';
+        if (nextBtn) {
+            const isAtEnd = track.scrollLeft + track.offsetWidth >= track.scrollWidth - 10;
+            nextBtn.style.opacity = isAtEnd ? '0.3' : '1';
         }
-    }
+    };
 
-    // Animate skill icon
-    const skillIcon = skillCard.querySelector('.skill-icon');
-    if (skillIcon) {
-        skillIcon.style.animation = 'iconFloat 3s ease-in-out infinite';
-    }
+    track.addEventListener('scroll', updateArrows);
+    window.addEventListener('resize', updateArrows);
+    setTimeout(updateArrows, 500); // Initial check
+}
+
+function createVideoCard(video, index) {
+    const card = document.createElement('div');
+    card.className = 'video-card';
+    card.setAttribute('data-anim', 'fade-up');
+    card.setAttribute('data-delay', (index * 100).toString());
+
+    // Google Drive Thumbnail URL
+    const thumbUrl = `https://drive.google.com/thumbnail?id=${video.id}&sz=w800`;
+
+    card.innerHTML = `
+        <div class="video-thumbnail-wrapper">
+            <img src="${thumbUrl}" alt="${video.title}" class="video-thumbnail" loading="lazy">
+            <div class="video-play-hint">
+                <svg viewBox="0 0 24 24"><path fill="currentColor" d="M8 5v14l11-7z"/></svg>
+            </div>
+        </div>
+        <div class="video-info">
+            <h3 class="video-title">${video.title}</h3>
+        </div>
+    `;
+
+    card.addEventListener('click', () => {
+        window.open(video.url, '_blank', 'noopener');
+    });
+
+    return card;
 }
 
 // Animated Counters for About Section
