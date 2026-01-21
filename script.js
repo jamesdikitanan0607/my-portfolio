@@ -525,8 +525,8 @@ const videoProjects = [
     },
     {
         title: 'Tiktok Content 2',
-        id: '1-lazb-JF-TnOaYw9c1yfshAP9pJt8wVD',
-        url: 'https://drive.google.com/file/d/1-lazb-JF-TnOaYw9c1yfshAP9pJt8wVD/view'
+        id: '1J5yJvJGL1SacEkaI8md9wADCT0McZPtI',
+        url: 'https://drive.google.com/file/d/1J5yJvJGL1SacEkaI8md9wADCT0McZPtI/view?usp=drive_link'
     },
     {
         title: 'Tiktok Content 3',
